@@ -4,12 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-public class Circle {
-    public float x; 
-    public float y; 
-    public float r;
-}
-
 public class Quad {
     public float x; 
     public float y; 
@@ -28,10 +22,7 @@ public partial class AnimForm : Form {
     public Graphics formGraphics;
     public SolidBrush myBrush;
     public Pen myPen;
-    
-    public Circle circle;
-    public IDictionary<int, Circle> circleDict = new Dictionary<int, Circle>();
-    
+
     public Quad quad;
     public IDictionary<int, Quad> quadDict = new Dictionary<int, Quad>();
     public int i, j;
