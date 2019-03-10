@@ -89,13 +89,13 @@ public partial class AnimForm : Form {
         quadDict.Add(4, quad);
                
         timer.Enabled = true;
-        timer.Tick += DancingBalls;
+        timer.Tick += DancingQuads;
         timer.Interval = 10;
         timer.Start();
         
     }
 
-    private void DancingBalls( object sender, System.EventArgs e ) {
+    private void DancingQuads( object sender, System.EventArgs e ) {
         
             //ticks++;
             
@@ -111,6 +111,33 @@ public partial class AnimForm : Form {
                 if(quadDict[i].ydir == 1) quadDict[i].y += elapsedTime; 
                 if(quadDict[i].ydir == 0) quadDict[i].y -= elapsedTime;
                 
+                /* Collision detection */
+                while(j<quadDict.Count) {                   
+                    if(j==i) { j++; continue; }                    
+                    if(
+                        (quadDict[i].x <= quadDict[j].x + quadDict[j].w && quadDict[i].x + quadDict[i].w >= quadDict[j].x) 
+                        && 
+                        (quadDict[i].y <= quadDict[j].y + quadDict[j].h && quadDict[i].y + quadDict[i].h >= quadDict[j].y)
+                    ) {                            
+                        
+                        quadDict[i].color = quadDict[j].color = "red";
+                        
+                        /*
+                        if( quadDict[i].x <= quadDict[j].x + quadDict[j].w ) {
+                            if(quadDict[i].xdir==0) quadDict[i].xdir = 1;
+                            else quadDict[i].xdir = 0;
+                        }
+                        if( quadDict[i].y <= quadDict[j].y + quadDict[j].h ) {
+                            if(quadDict[i].ydir==0) quadDict[i].ydir = 1;
+                            else quadDict[i].ydir = 0;
+                        }
+                        */
+                        
+                    }  
+                    j++;                    
+                }
+                j = 0;                
+                
                 /* Out of view detection */
                 if(quadDict[i].xdir == 1) {                    
                     if(quadDict[i].x+quadDict[i].w >= 480.0) quadDict[i].xdir = 0;                   
@@ -121,21 +148,7 @@ public partial class AnimForm : Form {
                     if(quadDict[i].y+quadDict[i].h >= 320.0) quadDict[i].ydir = 0;               
                 } else if(quadDict[i].ydir == 0) {                    
                     if(quadDict[i].y <= 1.0) quadDict[i].ydir = 1;                
-                }
-            
-                /* Collision detection */
-                while(j<quadDict.Count) {                   
-                    if(j==i) { j++; continue; }                    
-                    if( 
-                        (quadDict[i].x < quadDict[j].x + quadDict[j].w && quadDict[i].x + quadDict[i].w > quadDict[j].x ) 
-                        && 
-                        (quadDict[i].y < quadDict[j].y + quadDict[j].h && quadDict[i].y + quadDict[i].h > quadDict[j].y ) 
-                    ) {
-                        quadDict[i].color = quadDict[j].color = "red";
-                    }  
-                    j++;                    
-                }
-                j = 0;
+                } 
                 
                 if(quadDict[i].color == "red") formGraphics.FillRectangle(Brushes.Red, quadDict[i].x, quadDict[i].y, quadDict[i].w, quadDict[i].h);
                 else formGraphics.FillRectangle(Brushes.White, quadDict[i].x, quadDict[i].y, quadDict[i].w, quadDict[i].h);

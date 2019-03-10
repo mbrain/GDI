@@ -64,7 +64,7 @@ public partial class AnimForm : Form {
         triDict.Add(2, tri);
                
         timer.Enabled = true;
-        timer.Tick += DancingBalls;
+        timer.Tick += RotatingTriangles;
         timer.Interval = 10;
         timer.Start();
         
@@ -91,7 +91,7 @@ public partial class AnimForm : Form {
         triDict[i] = tri;    
     }
 
-    private void DancingBalls( object sender, System.EventArgs e ) {           
+    private void RotatingTriangles( object sender, System.EventArgs e ) {           
             formGraphics.Clear(Color.Black);            
             elapsedTime = 0.01f;           
             while(i<triDict.Count) {    
